@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Moda Urbana | Ropa con estilo</title>
+    <!-- Font Awesome 6 (gratis) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #1e1e2f;
+            transition: background 0.2s;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 0.8rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+            background: rgba(255,255,255,0.92);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #111;
+        }
+        .logo span {
+            color: #d94f4f;
+            font-weight: 800;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        .nav-icons a {
+            color: #222;
+            font-size: 1.3rem;
+            transition: color 0.2s, transform 0.2s;
+            position: relative;
+        }
+        .nav-icons a:hover {
+            color: #d94f4f;
+            transform: translateY(-2px);
+        }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #d94f4f;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 30px;
+            line-height: 1.2;
+        }
+
+        /* ===== BUSCADOR Y MENÚ (responsive) ===== */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f0f2f5;
+            padding: 0.45rem 1rem;
+            border-radius: 40px;
+            flex: 1 1 200px;
+            max-width: 350px;
+        }
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 0.95rem;
+            padding: 0.2rem 0.2rem 0.2rem 0.5rem;
+        }
+        .search-bar i {
+            color: #6c757d;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.7rem;
+            background: none;
+            border: none;
+            color: #111;
+            cursor: pointer;
+        }
+
+        /* ===== NAVEGACIÓN PRINCIPAL ===== */
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            padding: 0.8rem 5%;
+            background: #ffffff;
+            border-bottom: 1px solid #eaeef2;
+            flex-wrap: wrap;
+            transition: all 0.3s;
+        }
+        .main-nav a {
+            text-decoration: none;
+            color: #2d2d44;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .main-nav a:hover {
+            border-bottom-color: #d94f4f;
+            color: #d94f4f;
+        }
+
+        /* ===== SLIDER DE BANNERS ===== */
+        .slider-container {
+            position: relative;
+            max-width: 1300px;
+            margin: 2rem auto 1.5rem;
+            padding: 0 5%;
+            overflow: hidden;
+            border-radius: 32px;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        .slide img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+            background: #ddd;
+        }
+        .slide-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 80%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 8%;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .slide-content h2 {
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            font-weight: 700;
+            max-width: 70%;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .slide-content p {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            margin-bottom: 1.5rem;
+            max-width: 60%;
+            opacity: 0.95;
+        }
+        .btn-slide {
+            background: #d94f4f;
+            border: none;
+            color: white;
+            padding: 0.8rem 2.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 14px rgba(217, 79, 79, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-slide:hover {
+            background: #b83c3c;
+            transform: scale(1.03);
+        }
+
+        /* Flechas del slider */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
+            border: none;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #1e1e2f;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            z-index: 5;
+        }
+        .slider-btn:hover {
+            background: white;
+            color: #d94f4f;
+            transform: translateY(-50%) scale(1.08);
+        }
+        .prev {
+            left: 20px;
+        }
+        .next {
+            right: 20px;
+        }
+
+        /* puntos de navegación */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .dot.active {
+            background: #d94f4f;
+            width: 32px;
+            border-radius: 20px;
+        }
+
+        /* ===== TÍTULOS DE SECCIÓN ===== */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 1rem 1.8rem;
+            letter-spacing: -0.02em;
+            color: #1e1e2f;
+        }
+        .section-title span {
+            border-bottom: 4px solid #d94f4f;
+            padding-bottom: 6px;
+        }
+
+        /* ===== GRID DE PRODUCTOS ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            padding: 0 5% 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.1);
+        }
+
+        .product-img {
+            position: relative;
+            overflow: hidden;
+            background: #f1f3f5;
+            aspect-ratio: 1 / 1.1;
+        }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        .product-card:hover .product-img img {
+            transform: scale(1.04);
+        }
+        .tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #d94f4f;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-info {
+            padding: 1.2rem 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex: 1;
+        }
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e1e2f;
+        }
+        .product-category {
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #d94f4f;
+            margin-top: 0.2rem;
+        }
+        .price del {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            font-weight: 400;
+            margin-left: 0.5rem;
+        }
+        .btn-add {
+            background: #1e1e2f;
+            color: white;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.6rem;
+            width: 100%;
+        }
+        .btn-add:hover {
+            background: #d94f4f;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #12121c;
+            color: #e2e8f0;
+            padding: 2.5rem 5% 2rem;
+            margin-top: 3rem;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 600;
+        }
+        .footer-col p, .footer-col a {
+            color: #a0aec0;
+            text-decoration: none;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            display: block;
+        }
+        .footer-col a:hover {
+            color: #d94f4f;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.4rem;
+            margin-top: 1rem;
+        }
+        .social-icons a {
+            color: #a0aec0;
+            transition: 0.2s;
+        }
+        .social-icons a:hover {
+            color: #d94f4f;
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #2d2d44;
+            padding-top: 1.8rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #7f8c9b;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 850px) {
+            .slider-container {
+                padding: 0 3%;
+            }
+            .slide img {
+                height: 280px;
+            }
+            .slide-content h2 {
+                font-size: 1.8rem;
+                max-width: 90%;
+            }
+            .slide-content p {
+                max-width: 85%;
+                font-size: 0.95rem;
+            }
+            .slider-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
+            }
+            .prev {
+                left: 10px;
+            }
+            .next {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 0.8rem 4%;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .main-nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.2rem 0;
+                background: #ffffff;
+                border-bottom: 1px solid #eaeef2;
+            }
+            .main-nav.active {
+                display: flex;
+            }
+            .search-bar {
+                order: 3;
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+            .nav-icons {
+                gap: 1.5rem;
+            }
+            .logo {
+                font-size: 1.6rem;
+            }
+            .slide img {
+                height: 240px;
+            }
+            .slide-content h2 {
+                font-size: 1.4rem;
+            }
+            .slide-content p {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+            .btn-slide {
+                padding: 0.6rem 1.4rem;
+                font-size: 0.85rem;
+            }
+            .section-title {
+                font-size: 1.7rem;
+                margin: 2rem 1rem 1.2rem;
+            }
+            .products-grid {
+                gap: 1.2rem;
+                padding: 0 4% 2rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .slider-container {
+                padding: 0 2%;
+            }
+            .slide img {
+                height: 200px;
+            }
+            .slide-content h2 {
+                font-size: 1.2rem;
+            }
+            .slide-content p {
+                display: none;
+            }
+            .btn-slide {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .slider-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .product-title {
+                font-size: 0.95rem;
+            }
+            .price {
+                font-size: 1.1rem;
+            }
+            .btn-add {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">MODA<span>URBANA</span></div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Buscar prendas...">
+        </div>
+
+        <div class="nav-icons">
+            <a href="#"><i class="far fa-heart"></i></a>
+            <a href="#"><i class="far fa-user"></i></a>
+            <a href="#">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge">3</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN PRINCIPAL (se oculta en móvil) -->
+    <nav class="main-nav" id="mainNav">
+        <a href="#">Inicio</a>
+        <a href="#">Mujer</a>
+        <a href="#">Hombre</a>
+        <a href="#">Accesorios</a>
+        <a href="#">Ofertas</a>
+        <a href="#">Contacto</a>
+    </nav>
+
+    <!-- SLIDER DE BANNERS -->
+    <div class="slider-container">
+        <div class="slider" id="slider">
+            <!-- Slide 1 -->
+            <div class="slide">
+                <img src="https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Colección primavera">
+                <div class="slide-content">
+                    <h2>Nueva colección Primavera</h2>
+                    <p>Prendas frescas y ligeras para renovar tu armario.</p>
+                    <a href="#" class="btn-slide">Ver colección</a>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide">
+                <img src="https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Descuentos exclusivos">
+                <div class="slide-content">
+                    <h2>Hasta 40% de descuento</h2>
+                    <p>Aprovecha nuestras ofertas por tiempo limitado.</p>
+                    <a href="#" class="btn-slide">Comprar ahora</a>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="slide">
+                <img src="https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Estilo urbano">
+                <div class="slide-content">
+                    <h2>Estilo urbano &amp; comodidad</h2>
+                    <p>Descubre las prendas más buscadas de la temporada.</p>
+                    <a href="#" class="btn-slide">Explorar</a>
+                </div>
+            </div>
+        </div>
+        <!-- Flechas -->
+        <button class="slider-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        <!-- Puntos -->
+        <div class="slider-dots" id="sliderDots"></div>
+    </div>
+
+    <!-- TÍTULO PRODUCTOS -->
+    <h2 class="section-title"><span>Lo más vendido</span></h2>
+
+    <!-- GRID DE PRODUCTOS -->
+    <div class="products-grid">
+        <!-- Producto 1 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Camiseta oversize">
+                <span class="tag">Nuevo</span>
+            </div>
+            <div class="product-info">
+                <span class="product-category">Camisetas</span>
+                <h3 class="product-title">Camiseta oversize algodón</h3>
+                <div class="price">$29.99 <del>$39.99</del></div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 2 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Chaqueta vaquera">
+                <span class="tag">-20%</span>
+            </div>
+            <div class="product-info">
+                <span class="product-category">Chaquetas</span>
+                <h3 class="product-title">Chaqueta vaquera clásica</h3>
+                <div class="price">$59.99 <del>$74.99</del></div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 3 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Pantalón cargo">
+            </div>
+            <div class="product-info">
+                <span class="product-category">Pantalones</span>
+                <h3 class="product-title">Pantalón cargo beige</h3>
+                <div class="price">$45.50</div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 4 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/794062/pexels-photo-794062.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vestido floral">
+                <span class="tag">Top</span>
+            </div>
+            <div class="product-info">
+                <span class="product-category">Vestidos</span>
+                <h3 class="product-title">Vestido midi floral</h3>
+                <div class="price">$49.99 <del>$65.00</del></div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 5 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sudadera con capucha">
+            </div>
+            <div class="product-info">
+                <span class="product-category">Sudaderas</span>
+                <h3 class="product-title">Sudadera oversize negra</h3>
+                <div class="price">$39.90</div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 6 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Falda plisada">
+            </div>
+            <div class="product-info">
+                <span class="product-category">Faldas</span>
+                <h3 class="product-title">Falda plisada midi</h3>
+                <div class="price">$34.99 <del>$44.99</del></div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 7 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blazer oversize">
+                <span class="tag">Nuevo</span>
+            </div>
+            <div class="product-info">
+                <span class="product-category">Blazers</span>
+                <h3 class="product-title">Blazer oversize gris</h3>
+                <div class="price">$79.99</div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+        <!-- Producto 8 -->
+        <div class="product-card">
+            <div class="product-img">
+                <img src="https://images.pexels.com/photos/267301/pexels-photo-267301.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Camisa lino">
+            </div>
+            <div class="product-info">
+                <span class="product-category">Camisas</span>
+                <h3 class="product-title">Camisa lino relaxed</h3>
+                <div class="price">$42.00</div>
+                <button class="btn-add"><i class="fas fa-shopping-cart"></i> Añadir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>MODAURBANA</h4>
+                <p>Ropa con estilo para cada día. Calidad y tendencia en un solo lugar.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Comprar</h4>
+                <a href="#">Mujer</a>
+                <a href="#">Hombre</a>
+                <a href="#">Accesorios</a>
+                <a href="#">Rebajas</a>
+            </div>
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a href="#">Envíos</a>
+                <a href="#">Devoluciones</a>
+                <a href="#">Guía de tallas</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Ciudad</p>
+                <p><i class="fas fa-phone"></i> +34 600 123 456</p>
+                <p><i class="fas fa-envelope"></i> hola@modaurbana.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 ModaUrbana — Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT: SLIDER Y MENÚ RESPONSIVE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== SLIDER =====
+            const slider = document.getElementById('slider');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dotsContainer = document.getElementById('sliderDots');
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            let autoInterval;
+
+            // Crear dots
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.setAttribute('aria-label', `Ir al slide ${i+1}`);
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.dot');
+
+            function updateSlider() {
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                // Actualizar clase active en dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = totalSlides - 1;
+                if (index >= totalSlides) index = 0;
+                currentIndex = index;
+                updateSlider();
+                resetAuto();
+            }
+
+            function nextSlide() {
+                goToSlide(currentIndex + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentIndex - 1);
+            }
+
+            // Event listeners flechas
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // Auto avance cada 5 segundos
+            function startAuto() {
+                autoInterval = setInterval(nextSlide, 5000);
+            }
+
+            function resetAuto() {
+                clearInterval(autoInterval);
+                startAuto();
+            }
+
+            startAuto();
+
+            // Pausar auto al pasar el ratón (opcional, mejora UX)
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.addEventListener('mouseenter', () => clearInterval(autoInterval));
+            sliderContainer.addEventListener('mouseleave', startAuto);
+
+            // ===== MENÚ RESPONSIVE (toggle) =====
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+
+            menuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                // Cambiar icono (opcional)
+                const icon = menuToggle.querySelector('i');
+                if (mainNav.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Cerrar menú al hacer clic en un enlace (para móviles)
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 700) {
+                        mainNav.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            });
+
+            // Ajustar slider al redimensionar (por si acaso)
+            window.addEventListener('resize', () => {
+                // No es necesario hacer nada, solo aseguramos que el transform se mantenga
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            });
+        });
+    </script>
+</body>
+</html>
